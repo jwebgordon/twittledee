@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+    <head>
+        <title>Post a Comment</title>
+        <link type="text/css" rel="stylesheet" href="hubstyle.css" />
+    </head>
+    <body>
+        <h:form>
+            <table class="hs-table" style="width: 300px;">
+                <tr>
+                    <td style="width: 30%">
+                        <label class="hs-input label">Comment</label>
+                    </td>
+                    <td>
+                        <h:inputTextarea value="#{ModelBean.commentMessage}" class="textarea.hs-input #{ModelBean.commentClass}" style="width:200px;" >
+                        <f:facet name="label">
+                            Message
+                        </f:facet>
+                        </h:inputTextarea>
+                        
+                    </td>
+                    <td>
+                        <div style="width:100px;" class="progress #{ModelBean.progressClass}" >
+                            <div class="bar" style="width:#{ModelBean.sliderVal}%;" ></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="hs-input label">Name</label>
+                    </td>
+                    <td>
+                        <h:inputText value="#{ModelBean.commentAuthor}" class="input.hs-input">
+                        <f:facet name="label">
+                             Name
+                        </f:facet>
+                        </h:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="hs-input label">Email</label>
+                    </td>
+                    <td>
+                        <h:inputText  value="#{ModelBean.commentEmail}" class="input.hs-input">
+                        <f:facet name="label">
+                            Email
+                        </f:facet>
+                        </h:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:commandButton value="Analyze Message" class="hs-button orange" action="#{ModelBean.commentAnalysis()}" />
+                    </td>
+                    <td>
+                        <h:commandButton value="Submit" class="hs-button primary" action="#{ModelBean.postTheComment()}" />
+                    </td>
+                </tr>
+            
+            <h:outputText value="Post Successful" rendered="#{ModelBean.commentSuccess}" />
+            <h:outputText value="Post Failed" rendered="#{ModelBean.commentFailure}" />
+            </table>
+        </h:form>
+        <ul class="hs-help-nav">
+            <li>
+                <a href="blogcomms.xhtml" class="hs-help-button">Back to all comments</a>
+            </li>
+        </ul>
+    </body>
+</html>

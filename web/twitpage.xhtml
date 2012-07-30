@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+    <head>
+        <title>Lead Tweets</title>
+        <link rel="stylesheet" type="text/css" href="hubstyle.css" />
+    </head>
+    <body>
+        #{ModelBean.getTwitterLeadList()}
+        <header class="hs-main">
+            <ul class="hs-help-nav">
+                <li>
+                    <a href="twitpage.xhtml" class="hs-help-button first tutorial hs-help-tutorial hs-tooltip" >Tweets</a>
+                </li>
+                <li>
+                    <a href="blogcomms.xhtml" class="hs-help-button middle tour hs-help-tour hs-tooltip" >Blog Comments</a>
+                </li>
+            </ul>
+
+        </header>
+        <h:form class="hs-form">
+            <h:dataTable value="#{ModelBean.twitterLeads}" var="lead" class="hs-table" columnClasses="nameColumn,emailcolumn,handleColumn, tweetsColumn" style="vertical-align:text-top;" >
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Name" />
+                    </f:facet><strong>#{lead.firstName} #{lead.lastName}</strong>
+                </h:column>
+                <h:column width="200px">
+                    <f:facet name="header">
+                        <h:outputText value="Email" />
+                    </f:facet>#{lead.email}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Twitter Handle" />
+                    </f:facet>#{lead.twitter}
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Tweet Back" class="hs-button orange" action="#{ModelBean.makeTweet(lead.twitter)}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Tweets" />
+                    </f:facet>
+                    <h:dataTable value="#{lead.filteredTweets}" var="tweet" class="hs-table" rowClasses="#{lead.tweetCssClasses}" >
+                        <h:column>
+                            <f:facet name="msg">
+                                Message
+                            </f:facet>
+                            <h:outputText value="#{tweet.msg}" />
+                        </h:column>
+                        <h:column class="normColumn">
+                            <div class="progress #{tweet.progressClass}" style="width: 80px;" >
+                                <div class="bar" style="width: #{tweet.sliderVal}%;" ></div>
+                            </div>
+                        </h:column>
+                    </h:dataTable>
+                </h:column>
+            </h:dataTable>
+            <h:inputText value="#{ModelBean.filterKey}" class="hs-input" />
+            <h:commandButton value="Filter" action="#{ModelBean.filterTweets()}" class="hs-button primary" />    
+        </h:form>
+        
+    </body>
+</html>
