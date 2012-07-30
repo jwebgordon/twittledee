@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+    <head>
+        <title>Blog Comments</title>
+        <link rel="stylesheet" type="text/css" href="hubstyle.css" />
+    </head>
+    <body>
+        #{ModelBean.getTheBlogs()}
+        <header class="hs-main">
+            <ul class="hs-help-nav">
+                <li>
+                    <a href="twitpage.xhtml" class="hs-help-button first tutorial hs-help-tutorial hs-tooltip" >Tweets</a>
+                </li>
+                <li>
+                    <a href="blogcomms.xhtml" class="hs-help-button middle tour hs-help-tour hs-tooltip" >Blog Comments</a>
+                </li>
+            </ul>
+            
+            </header>
+        <h:form class="hs-form">
+            
+           
+            <h:dataTable value="#{ModelBean.blogs}" var="blog" class="hs-table">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{blog.title}" />
+                    </f:facet>
+                    #{blog.title}
+                    <h:dataTable value="#{blog.posts}" var="post" class="hs-table" >
+                        <h:column>
+                            <f:facet name="header">
+                                Post Title
+                            </f:facet>
+                            #{post.title}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Date
+                            </f:facet>
+                            #{post.date}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Link
+                            </f:facet>
+                            <a href="#{post.url}" target="_new">Link</a>
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="Comment" action="#{ModelBean.commentOnBlog(post.id)}" class="hs-button orange" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header" >
+                                Comments
+                            </f:facet>
+                            <h:dataTable value="#{post.comments}" var="comment" class="hs-table" rowClasses="#{post.classString}" >
+                                <h:column class="normColumn">
+                                    #{comment.name}
+                                </h:column>
+                                <h:column class="normColumn">
+                                    #{comment.email}
+                                </h:column>
+                                <h:column>
+                                    #{comment.msg}
+                                </h:column>
+                                <h:column class="normColumn">
+                                    <div class="progress #{comment.progressClass}" style="width: 80px" >
+                                        <div class="bar" style="width: #{comment.sliderVal}%;" ></div>
+                                    </div>
+                                </h:column>
+                            </h:dataTable>
+                        </h:column>
+
+                    </h:dataTable>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </body>
+</html>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Login</title>
+        <link rel="stylesheet" type="text/css" href="hubstyle.css" />
+    </h:head>
+    <h:body>
+      <h:form class="hs-form">
+            <table border="0">
+                <tbody>
+                    <tr>
+                        <td><label class="hs-input label" >Portal ID</label></td>
+                        <td><h:inputText value="#{ModelBean.hubID}" class="hs-input" /></td>
+                    </tr>
+                    <tr>
+                        <td><label class="hs-input label" >O-Auth token</label></td>
+                        <td><h:inputText value="#{ModelBean.oAuth}" class="hs-input" /></td>
+                    </tr>
+                    <tr>
+                        <td><label class="hs-input label" >Hapi Key</label></td>
+                        <td><h:inputText value="#{ModelBean.APIKey}" class="hs-input" /></td>
+                    </tr>
+                    <tr>
+                        <td><h:commandButton action="#{ModelBean.checkAuth()}"   value="Connect" class="hs-button primary"  /></td>
+                        <td><h:outputText rendered="#{ModelBean.error}" value="API key or o-auth invalid" class="hs-block-message error" style="color:red;" /></td>
+                          </tr>
+                </tbody>
+            </table>
+      </h:form>
+    </h:body>
+</html>
+
