@@ -59,6 +59,8 @@ public class ModelBean {
     private String ending;
     private double sliderVal;
     private String progressClass;
+    private String blogPostTitle;
+    private String blogPostContent;
     /**
      * Creates a new instance of ModelBean
      */
@@ -73,6 +75,24 @@ public class ModelBean {
         iframeClass = "none!important";
         sliderVal = 0;
     }
+
+    public String getBlogPostContent() {
+        return blogPostContent;
+    }
+
+    public void setBlogPostContent(String blogPostContent) {
+        this.blogPostContent = blogPostContent;
+    }
+
+    public String getBlogPostTitle() {
+        return blogPostTitle;
+    }
+
+    public void setBlogPostTitle(String blogPostTitle) {
+        this.blogPostTitle = blogPostTitle;
+    }
+    
+    
 
     public String getProgressClass() {
         return progressClass;
