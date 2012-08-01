@@ -9,6 +9,18 @@ and open the template in the editor.
         <title>Analyze Any Block of Text</title>
     </head>
     <body>
-        
+        <h:form>
+            <table class="hs-table" style="width: 500px;" >
+                <tr>
+                    <td>
+                        <h:inputTextarea class="hs-input textarea" style="width: 100%; height: 400px;" value="#{ModelBean.textBlock}"/>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <h:commandButton class="hs-button orange" action="#{ModelBean.analyzeTextBlock()}" value="Analyze!" />
+                </tr>
+            </table>
+        </h:form>
     </body>
 </html>

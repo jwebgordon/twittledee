@@ -61,6 +61,7 @@ public class ModelBean {
     private String progressClass;
     private String blogPostTitle;
     private String blogPostContent;
+    private String textBlock;
     /**
      * Creates a new instance of ModelBean
      */
@@ -75,6 +76,16 @@ public class ModelBean {
         iframeClass = "none!important";
         sliderVal = 0;
     }
+
+    public String getTextBlock() {
+        return textBlock;
+    }
+
+    public void setTextBlock(String textBlock) {
+        this.textBlock = textBlock;
+    }
+    
+    
 
     public String getBlogPostContent() {
         return blogPostContent;
@@ -1213,5 +1224,47 @@ public class ModelBean {
     public void resetProgress(){
         progressClass = "";
         sliderVal = 0;
+    }
+    
+    public void analyzeTextBlock(){
+        try {
+            String url_args = URLEncoder.encode("apiKey", "UTF-8") + "=" + URLEncoder.encode("cwhjxmnymkvxec3w874fb3snx9m5rjsv", "UTF-8");
+            url_args += "&" + URLEncoder.encode("analysis", "UTF-8") + "=" + URLEncoder.encode("all", "UTF-8");
+            url_args += "&" + URLEncoder.encode("outputFormat", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8");
+            url_args += "&" + URLEncoder.encode("inputText", "UTF-8") + "=" + URLEncoder.encode(textBlock, "UTF-8");
+            
+            URL url = new URL("http://portaltnx20.openamplify.com/AmplifyWeb_v21/AmplifyThis");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+            wr.write(url_args);
+            wr.flush();
+            InputStream response = conn.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(response));
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            JSONObject obj = new JSONObject(sb.toString());
+            double tone = obj.getJSONObject("ns1:AmplifyResponse").getJSONObject("AmplifyReturn").getJSONObject("Styles").getJSONObject("Polarity").getJSONObject("Mean").getDouble("Value");
+            System.out.println("tone: " + tone);
+            sliderVal = Math.abs(tone*100);
+            if (tone > 0) {
+                tweetClass = "commentPos";
+                progressClass = "progress-success";
+            } else if (tone < 0) {
+                tweetClass = "commentNeg";
+                progressClass = "progress-danger";
+            } else {
+                tweetClass = "commentNorm";
+            }
+
+            System.out.println("Analysis:" + obj);
+        }
+        catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
 }
