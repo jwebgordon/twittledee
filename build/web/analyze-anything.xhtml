@@ -7,8 +7,98 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
     <head>
         <title>Analyze Any Block of Text</title>
+        <link type="text/css" rel="stylesheet" href="hubstyle.css" />
     </head>
     <body>
-        
+        <header class="hs-main">
+        <ul class="hs-help-nav">
+            <li>
+                <a href="twitpage.xhtml" class="hs-help-button first tutorial hs-help-tutorial hs-tooltip" >Tweets</a>
+            </li>
+            <li>
+                <a href="blogcomms.xhtml" class="hs-help-button middle tour hs-help-tour hs-tooltip" >Blog Comments</a>
+            </li>
+            <li>
+                <a href="analyze-anything.xhtml" class="hs-help-button last tour hs-help-tour hs-tooltip" >Analyze Anything</a>
+            </li>
+        </ul>
+        </header>
+        <h:form>
+            <table class="hs-table" style="width: 700px;" >
+                <tr>
+                    <td>
+                        <h:inputTextarea class="hs-input textarea" style="width: 50%; height: 400px;" value="#{ModelBean.textBlock}"/>
+
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <label class="hs-label" >Tone</label>
+                                </td>
+                                <td>
+                                    <div class="progress #{ModelBean.progressClass}" style="width: 100px" >
+                                        <div class="bar" style="width: #{ModelBean.polarityVal}%;" ></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="hs-label" >Offering Guidance?</label>
+                                </td>
+                                <td>
+                                    <div class="progress progress-offeringGuidance" style="width: 100px" >
+                                        <div class="bar" style="width: #{ModelBean.offeringGuidanceVal}%;" ></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="hs-label" >Requesting Guidance?</label>
+                                </td>
+                                <td>
+                                    <div class="progress progress-requestingGuidance" style="width:100px" >
+                                        <div class="bar" style="width: #{ModelBean.requestingGuidanceVal}%;" ></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="hs-label" >Flamboyance</label>
+                                </td>
+                                <td>
+                                    <div class="progress progress-flamboyance" style="width: 100px" >
+                                        <div class="bar" style="width: #{ModelBean.flamboyanceVal}%;" ></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="hs-label" >Slang</label>
+                                </td>
+                                <td>
+                                    <div class="progress progress-slang" style="width: 100px" >
+                                        <div class="bar" style="width: #{ModelBean.slangVal}%;" ></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="hs-label" >Decisiveness</label>
+                                </td>
+                                <td>
+                                    <div class="progress progress-slang" style="width: 100px" >
+                                        <div class="bar" style="width: #{ModelBean.decisivenessVal}%;" ></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <h:commandButton class="hs-button orange" action="#{ModelBean.analyzeTextBlock()}" value="Analyze!" />
+                </tr>
+            </table>
+        </h:form>
     </body>
 </html>
