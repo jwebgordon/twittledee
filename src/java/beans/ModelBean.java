@@ -57,7 +57,8 @@ public class ModelBean {
     private String tweetClass;
     private String bookmarkletURL;
     private String ending;
-    private double sliderVal;
+    private double polarityVal;
+    private double contrastVal, decisivenessVal, offeringGuidanceVal, flamboyanceVal, slangVal, requestingGuidanceVal;
     private String progressClass;
     private String blogPostTitle;
     private String blogPostContent;
@@ -74,8 +75,58 @@ public class ModelBean {
         twitterAuthorized = false;
         iframeHidden = true;
         iframeClass = "none!important";
-        sliderVal = 0;
+        polarityVal = 0;
     }
+
+    public double getDecisivenessVal() {
+        return decisivenessVal;
+    }
+
+    public void setDecisivenessVal(double decisivenessVal) {
+        this.decisivenessVal = decisivenessVal;
+    }
+
+    public double getFlamboyanceVal() {
+        return flamboyanceVal;
+    }
+
+    public void setFlamboyanceVal(double flamboyanceVal) {
+        this.flamboyanceVal = flamboyanceVal;
+    }
+
+    public double getOfferingGuidanceVal() {
+        return offeringGuidanceVal;
+    }
+
+    public void setOfferingGuidanceVal(double offeringGuidanceVal) {
+        this.offeringGuidanceVal = offeringGuidanceVal;
+    }
+
+    public double getPolarityVal() {
+        return polarityVal;
+    }
+
+    public void setPolarityVal(double polarityVal) {
+        this.polarityVal = polarityVal;
+    }
+
+    public double getRequestingGuidanceVal() {
+        return requestingGuidanceVal;
+    }
+
+    public void setRequestingGuidanceVal(double requestingGuidanceVal) {
+        this.requestingGuidanceVal = requestingGuidanceVal;
+    }
+
+    public double getSlangVal() {
+        return slangVal;
+    }
+
+    public void setSlangVal(double slangVal) {
+        this.slangVal = slangVal;
+    }
+    
+    
 
     public String getTextBlock() {
         return textBlock;
@@ -116,11 +167,11 @@ public class ModelBean {
     
 
     public double getSliderVal() {
-        return sliderVal;
+        return polarityVal;
     }
 
-    public void setSliderVal(double sliderVal) {
-        this.sliderVal = sliderVal;
+    public void setSliderVal(double polarityVal) {
+        this.polarityVal = polarityVal;
     }
     
     
@@ -1105,7 +1156,7 @@ public class ModelBean {
             JSONObject obj = new JSONObject(sb.toString());
             double tone = obj.getJSONObject("ns1:AmplifyResponse").getJSONObject("AmplifyReturn").getJSONObject("Styles").getJSONObject("Polarity").getJSONObject("Mean").getDouble("Value");
             System.out.println("tone: " + tone);
-            sliderVal = Math.abs(tone*100);
+            polarityVal = Math.abs(tone*100);
             if (tone > 0) {
                 commentClass = "commentPos";
                 progressClass = "progress-success";
@@ -1192,7 +1243,7 @@ public class ModelBean {
             JSONObject obj = new JSONObject(sb.toString());
             double tone = obj.getJSONObject("ns1:AmplifyResponse").getJSONObject("AmplifyReturn").getJSONObject("Styles").getJSONObject("Polarity").getJSONObject("Mean").getDouble("Value");
             System.out.println("tone: " + tone);
-            sliderVal = Math.abs(tone*100);
+            polarityVal = Math.abs(tone*100);
             if (tone > 0) {
                 tweetClass = "commentPos";
                 progressClass = "progress-success";
@@ -1223,7 +1274,12 @@ public class ModelBean {
     
     public void resetProgress(){
         progressClass = "";
-        sliderVal = 0;
+        polarityVal = 0;
+        offeringGuidanceVal = 0;
+        requestingGuidanceVal = 0;
+        flamboyanceVal = 0;
+        slangVal = 0;
+        decisivenessVal = 0;
     }
     
     public void analyzeTextBlock(){
@@ -1250,7 +1306,12 @@ public class ModelBean {
             JSONObject obj = new JSONObject(sb.toString());
             double tone = obj.getJSONObject("ns1:AmplifyResponse").getJSONObject("AmplifyReturn").getJSONObject("Styles").getJSONObject("Polarity").getJSONObject("Mean").getDouble("Value");
             System.out.println("tone: " + tone);
-            sliderVal = Math.abs(tone*100);
+            polarityVal = Math.abs(tone*100);
+            offeringGuidanceVal = obj.getJSONObject("ns1:AmplifyResponse").getJSONObject("AmplifyReturn").getJSONObject("Styles").getJSONObject("OfferingGuidance").getDouble("Value")*20;
+            requestingGuidanceVal = obj.getJSONObject("ns1:AmplifyResponse").getJSONObject("AmplifyReturn").getJSONObject("Styles").getJSONObject("RequestingGuidance").getDouble("Value")*20;
+            slangVal = obj.getJSONObject("ns1:AmplifyResponse").getJSONObject("AmplifyReturn").getJSONObject("Styles").getJSONObject("Slang").getDouble("Value")*20;
+            decisivenessVal = obj.getJSONObject("ns1:AmplifyResponse").getJSONObject("AmplifyReturn").getJSONObject("Styles").getJSONObject("Decisiveness").getDouble("Value")*20;
+            flamboyanceVal = obj.getJSONObject("ns1:AmplifyResponse").getJSONObject("AmplifyReturn").getJSONObject("Styles").getJSONObject("Flamboyance").getDouble("Value")*20;
             if (tone > 0) {
                 tweetClass = "commentPos";
                 progressClass = "progress-success";
